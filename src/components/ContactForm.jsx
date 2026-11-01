@@ -27,9 +27,9 @@ const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_ynjwyk8
 const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'q6ud99RTUp03j81hB';
 
     if (!serviceId || !templateId || !publicKey) {
-      console.error('EmailJS keys missing in .env file!');
+      console.error('Key Missing');
       setStatus('error');
-      setFeedback('EmailJS keys missing in your .env file.');
+      setFeedback('key missing');
       return;
     }
 
@@ -66,7 +66,7 @@ ${formData.message}`;
 
       if (res.status === 200 || res.text === 'OK') {
         setStatus('success');
-        setFeedback('Message delivered directly to your Gmail inbox! Thank you.');
+        setFeedback('Message delivered! Thank You.');
         setFormData({ name: '', email: '', message: '' });
 
         // 4 seconds baad notification khud gayab aur form fresh
@@ -75,7 +75,7 @@ ${formData.message}`;
           setFeedback('');
         }, 4000);
       } else {
-        throw new Error(res.text || 'EmailJS failed');
+        throw new Error(res.text || 'failed');
       }
     } catch (err) {
       console.error('EmailJS Error:', err);
@@ -158,7 +158,7 @@ ${formData.message}`;
           disabled={status === 'loading'}
           className="px-8 py-4 bg-white text-black font-mono text-xs font-bold rounded-xl hover:bg-zinc-200 active:scale-95 transition-all shadow-lg tracking-wider uppercase disabled:opacity-50"
         >
-          {status === 'loading' ? 'TRANSMITTING MESSAGE...' : 'SEND MESSAGE DIRECTLY ↗'}
+          {status === 'loading' ? 'Sending...' : 'SEND MESSAGE'}
         </button>
       </div>
     </form>
