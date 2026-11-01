@@ -9,6 +9,8 @@ import About from './sections/About';
 import Contact from './sections/Contact';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 export default function App() {
   const [hasEntered, setHasEntered] = useState(false);
@@ -52,6 +54,10 @@ export default function App() {
 
       {/* 3. WHATSAPP BUTTON: HIDDEN DURING INTRO, REVEALED ONLY AFTER ENTRANCE */}
       <WhatsAppButton visible={hasEntered} />
+
+      {/* 4. VERCEL ANALYTICS + SPEED INSIGHTS (screen pe kuch nahi dikhate) */}
+      <Analytics />
+      <SpeedInsights />
     </div>
   );
 }
