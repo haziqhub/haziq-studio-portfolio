@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
 import ReactDOM from 'react-dom';
 
 export default function ProjectModal({ project, isOpen, onClose, onOpenLightboxWithIndex }) {
@@ -20,6 +20,41 @@ export default function ProjectModal({ project, isOpen, onClose, onOpenLightboxW
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen, handleKeyDown]);
+
+  // ---- BACK BUTTON FIX ----
+  const onCloseRef = useRef(onClose);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
+  const closedByBackRef = useRef(false);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    closedByBackRef.current = false;
+    // modal ke liye ek history entry banao
+    window.history.pushState({ ...window.history.state, modal: true }, '');
+
+    const handlePopState = () => {
+      // Agar back dabane ke baad bhi modal wali entry par hain, to matlab
+      // sirf lightbox band hua hai -> modal ko mat chhedo
+      if (window.history.state?.modal) return;
+      closedByBackRef.current = true;
+      onCloseRef.current();
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      // X / Escape / backdrop se band hua to extra entry hata do
+      if (!closedByBackRef.current && window.history.state?.modal) {
+        window.history.back();
+      }
+    };
+  }, [isOpen]);
+  // ---- END FIX ----
 
   if (!mounted || !isOpen || !project || typeof document === 'undefined') {
     return null;

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
 /* ============================================================================
@@ -8,6 +8,12 @@ import * as THREE from 'three';
    dull brass. No emissive glow, no gradients.
    Units are metres. Floor top = y 0. Gate wall sits at z = +3.6.
    ========================================================================== */
+
+/* ---------- device profile (used for quality tuning only, never for design) ---------- */
+export const IS_MOBILE =
+  typeof window !== 'undefined' &&
+  (!!window.matchMedia?.('(pointer: coarse)').matches || window.innerWidth < 768);
+const ANISO = IS_MOBILE ? 4 : 8;
 
 /* ---------- gate dimensions (single source of truth) ---------- */
 const OPENING_HALF = 1.2; // clear opening is 2.4 m wide, centred on x = 0
@@ -28,7 +34,7 @@ const mk = (w, h) => {
 const toTex = (c, repeat) => {
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
-  t.anisotropy = 8;
+  t.anisotropy = ANISO;
   if (repeat) {
     t.wrapS = t.wrapT = THREE.RepeatWrapping;
     t.repeat.set(repeat[0], repeat[1]);
@@ -362,20 +368,26 @@ function buildMaterials() {
 const Ctx = createContext(null);
 const useM = () => useContext(Ctx);
 
-/* ---------- primitives ---------- */
+/* ---------- primitives ----------
+   Shared geometry: one unit box for every cuboid (size comes from mesh.scale, UVs/normals are identical
+   to a sized BoxGeometry) and a cache for cylinders. Far less GPU memory and faster scene start. */
+const BOX = new THREE.BoxGeometry(1, 1, 1);
+const cylCache = new Map();
+const getCyl = (a) => {
+  const k = a.join(',');
+  let g = cylCache.get(k);
+  if (!g) {
+    g = new THREE.CylinderGeometry(...a);
+    cylCache.set(k, g);
+  }
+  return g;
+};
+
 function B({ p = [0, 0, 0], s, m, r, cast, recv }) {
-  return (
-    <mesh position={p} rotation={r} material={m} castShadow={cast} receiveShadow={recv}>
-      <boxGeometry args={s} />
-    </mesh>
-  );
+  return <mesh position={p} rotation={r} scale={s} geometry={BOX} material={m} castShadow={cast} receiveShadow={recv} />;
 }
 function Cy({ p, a, m, r, cast }) {
-  return (
-    <mesh position={p} rotation={r} material={m} castShadow={cast}>
-      <cylinderGeometry args={a} />
-    </mesh>
-  );
+  return <mesh position={p} rotation={r} material={m} castShadow={cast} geometry={getCyl(a)} />;
 }
 
 /* ============================================================================
@@ -388,7 +400,7 @@ function Door({ side, progress, plaqueTex }) {
   const ctx = useM();
   const M = { ...ctx, oakV: ctx.gateOak };
   const ref = useRef();
-  
+
   // Exact geometry: each leaf is exactly 1.20m wide (2.4m opening / 2)
   const DOOR_WIDTH = 1.20;
   const DOOR_HEIGHT = 3.0;
@@ -400,7 +412,8 @@ function Door({ side, progress, plaqueTex }) {
     // Rotation lock: when closed (p < 0.001), rotation is strictly 0 (no jitter/wobble)
     const p = progress?.current || 0;
     const currentAngle = p < 0.001 ? 0 : p * 1.65;
-    ref.current.rotation.y = -side * currentAngle;
+    const y = -side * currentAngle;
+    if (ref.current.rotation.y !== y) ref.current.rotation.y = y;
   });
 
   return (
@@ -729,8 +742,12 @@ function Hallway() {
 
 function Lights({ lf }) {
   const hemi = useRef(), key = useRef(), lamp = useRef(), hall = useRef();
+  const last = useRef(-1);
   useFrame(() => {
     const f = lf.current;
+    // Only touch the lights when the factor actually changed (intro fade), not every frame.
+    if (Math.abs(f - last.current) < 1e-4) return;
+    last.current = f;
     hemi.current.intensity = 0.7 * f;
     key.current.intensity = 2.4 * f;
     lamp.current.intensity = 0.7 * f;
@@ -766,11 +783,13 @@ function useFontsReady() {
     const f = document.fonts;
     const go = () => on && setOk(true);
     if (!f) return go();
+    // Safety net: never wait more than 1.5 s for fonts (slow mobile networks).
+    const timer = setTimeout(go, 1500);
     Promise.all([f.load(`700 40px ${SERIF}`), f.load(`600 20px ${MONO}`)])
       .catch(() => {})
       .then(() => f.ready)
       .then(go);
-    return () => { on = false; };
+    return () => { on = false; clearTimeout(timer); };
   }, []);
   return ok;
 }
@@ -783,6 +802,7 @@ export default function IsometricRoomScene({ scrollProgress, doorOpenProgress, i
   const roomGroup = useRef();
   const roomVel = useRef(0);
   const fontsOk = useFontsReady();
+  const { gl, scene, camera } = useThree();
 
   const mats = useMemo(() => buildMaterials(), []);
   useEffect(() => () => {
@@ -790,18 +810,34 @@ export default function IsometricRoomScene({ scrollProgress, doorOpenProgress, i
     mats.textures.forEach((t) => t.dispose());
   }, [mats]);
 
-  const tex = useMemo(() => ({
-    plaqueL: toTex(plaqueCanvas('MAAZ', 'ENGINEERING')),
-    plaqueR: toTex(plaqueCanvas('STUDIO', 'WORKSPACE')),
-    main: toTex(mainScreenCanvas()),
-    vert: toTex(vertScreenCanvas()),
-    print1: toTex(printCanvas([['DISCIPLINE', 64, 260], ['GREATER THAN', 46, 330], ['MOTIVATION', 64, 400], ['Great software is never accidental.', 25, 560, 600], ['ENGINEERED WITH INTENT', 22, 620, 600]])),
-    print2: toTex(printCanvas([['FIRMITAS', 64, 260], ['UTILITAS', 64, 340], ['VENUSTAS', 64, 420], ['Strength, utility and beauty.', 26, 560, 600], ['Vitruvius', 22, 620, 600]])),
-    quoteBack: toTex(quoteCanvas(1200, 800, ['Form ever follows', 'function.'], 'LOUIS SULLIVAN', 84)),
-    quoteRight: toTex(quoteCanvas(560, 760, ['A house is a machine', 'for living in.'], 'LE CORBUSIER', 36)),
-    quoteLeft: toTex(quoteCanvas(560, 760, ['Less', 'is more.'], 'MIES VAN DER ROHE', 96)),
-  }), [fontsOk]);
-  useEffect(() => () => Object.values(tex).forEach((t) => t.dispose()), [tex]);
+  // Text textures are built exactly once, after the fonts are ready (previously built twice).
+  const tex = useMemo(() => {
+    if (!fontsOk) return null;
+    return {
+      plaqueL: toTex(plaqueCanvas('MAAZ', 'ENGINEERING')),
+      plaqueR: toTex(plaqueCanvas('STUDIO', 'WORKSPACE')),
+      main: toTex(mainScreenCanvas()),
+      vert: toTex(vertScreenCanvas()),
+      print1: toTex(printCanvas([['DISCIPLINE', 64, 260], ['GREATER THAN', 46, 330], ['MOTIVATION', 64, 400], ['Great software is never accidental.', 25, 560, 600], ['ENGINEERED WITH INTENT', 22, 620, 600]])),
+      print2: toTex(printCanvas([['FIRMITAS', 64, 260], ['UTILITAS', 64, 340], ['VENUSTAS', 64, 420], ['Strength, utility and beauty.', 26, 560, 600], ['Vitruvius', 22, 620, 600]])),
+      quoteBack: toTex(quoteCanvas(1200, 800, ['Form ever follows', 'function.'], 'LOUIS SULLIVAN', 84)),
+      quoteRight: toTex(quoteCanvas(560, 760, ['A house is a machine', 'for living in.'], 'LE CORBUSIER', 36)),
+      quoteLeft: toTex(quoteCanvas(560, 760, ['Less', 'is more.'], 'MIES VAN DER ROHE', 96)),
+    };
+  }, [fontsOk]);
+  useEffect(() => () => { if (tex) Object.values(tex).forEach((t) => t.dispose()); }, [tex]);
+
+  // Warm-up: upload textures and compile shaders up front so the intro doesn't stutter on first frames.
+  useEffect(() => {
+    if (!tex) return;
+    try {
+      [...mats.textures, ...Object.values(tex)].forEach((t) => gl.initTexture?.(t));
+      if (gl.compileAsync) gl.compileAsync(scene, camera).catch(() => {});
+      else gl.compile(scene, camera);
+    } catch {
+      /* warm-up is best effort only */
+    }
+  }, [tex, mats, gl, scene, camera]);
 
   useFrame((state, delta) => {
     const g = roomGroup.current;
@@ -816,7 +852,11 @@ export default function IsometricRoomScene({ scrollProgress, doorOpenProgress, i
     roomVel.current += (K * (target - g.rotation.y) - C * roomVel.current) * dt;
     g.rotation.y += roomVel.current * dt;
     g.rotation.x = 0;
+    // On-demand rendering: keep drawing only while the room is still moving.
+    if (Math.abs(target - g.rotation.y) > 4e-4 || Math.abs(roomVel.current) > 4e-4) state.invalidate(2);
   });
+
+  if (!tex) return null;
 
   return (
     <Ctx.Provider value={mats.m}>

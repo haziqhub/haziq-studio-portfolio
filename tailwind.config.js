@@ -15,9 +15,9 @@ export default {
         accent: '#2563eb',
       },
       fontFamily: {
-        display: ['Cabinet Grotesk', 'Plus Jakarta Sans', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
-        sans: ['Plus Jakarta Sans', 'sans-serif'],
+        display: ['Cabinet Grotesk', 'Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'ui-monospace', 'Consolas', 'monospace'],
+        sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
       },
     },
   },

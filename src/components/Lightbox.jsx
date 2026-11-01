@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
 import ReactDOM from 'react-dom';
 
 export default function Lightbox({ isOpen, images = [], currentIndex = 0, onClose, onNavigate }) {
@@ -27,6 +27,39 @@ export default function Lightbox({ isOpen, images = [], currentIndex = 0, onClos
     };
   }, [isOpen, handleKeyDown]);
 
+  // ---- BACK BUTTON FIX ----
+  const onCloseRef = useRef(onClose);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
+  const closedByBackRef = useRef(false);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    closedByBackRef.current = false;
+    // lightbox ke liye ek history entry banao
+    window.history.pushState({ ...window.history.state, lightbox: true }, '');
+
+    const handlePopState = () => {
+      // user ne browser/mobile back dabaya -> sirf lightbox band karo
+      closedByBackRef.current = true;
+      onCloseRef.current();
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      // agar X / Escape / backdrop se band hua, to extra entry hata do
+      if (!closedByBackRef.current && window.history.state?.lightbox) {
+        window.history.back();
+      }
+    };
+  }, [isOpen]);
+  // ---- END FIX ----
+
   if (!mounted || !isOpen || images.length === 0 || typeof document === 'undefined') {
     return null;
   }
@@ -52,7 +85,7 @@ export default function Lightbox({ isOpen, images = [], currentIndex = 0, onClos
         className="w-full max-w-7xl mx-auto flex items-center justify-between z-10 pb-4 border-b border-white/15"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* SIRF [1 / 4] NUMBER REHEGA - TEXT HATA DIYA HAI */}
+        {/* SIRF [1 / 4] NUMBER REHEGA */}
         <div className="flex items-center">
           <span className="font-mono text-xs font-bold text-amber-500 uppercase tracking-widest">
             [{currentIndex + 1} / {images.length}]
