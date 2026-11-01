@@ -23,7 +23,7 @@ export default function Contact() {
             [ CONTACT ME ]
           </span>
           <h2 className="font-display font-extrabold text-3xl sm:text-6xl lg:text-7xl text-white uppercase tracking-tight">
-            LET&apos;S BUILD SOMETHING GREAT
+            LET'S MAKE IT HAPPEN
           </h2>
         </div>
 
