@@ -22,9 +22,9 @@ export default function ContactForm() {
     setStatus('loading');
     setFeedback('');
 
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_nkmclvs';
+const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_ynjwyk8';
+const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'q6ud99RTUp03j81hB';
 
     if (!serviceId || !templateId || !publicKey) {
       console.error('EmailJS keys missing in .env file!');
