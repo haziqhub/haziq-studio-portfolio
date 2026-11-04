@@ -47,7 +47,7 @@ export default function WhatsAppButton({ visible = false }) {
 
         {/* Hover Tooltip */}
         <span className="hidden sm:group-hover:block absolute left-full ml-3 px-3 py-1.5 bg-[#121318] text-white border border-white/15 font-mono text-[11px] font-bold rounded-lg shadow-2xl whitespace-nowrap">
-          WHATSAPP: 03306175872 ↗
+          WHATSAPP: +92 310-807-1840 ↗
         </span>
       </a>
     </aside>

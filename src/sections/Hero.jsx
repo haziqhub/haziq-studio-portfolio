@@ -108,7 +108,7 @@ export default function Hero() {
       {/* Top Meta Bar */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 font-mono text-[10px] sm:text-xs font-bold text-zinc-400 mb-8 border-b border-white/10 pb-4">
         <span className="tracking-widest uppercase">
-          OFFICIAL PORTFOLIO // 2025
+          OFFICIAL PORTFOLIO // 2026
         </span>
 
         {/* Live Karachi Real-Time Clock */}
@@ -123,7 +123,7 @@ export default function Hero() {
           <div className="space-y-1">
             {/* Signature "Maaz Khan" */}
             <h1 className="font-['Caveat',cursive] text-7xl sm:text-8xl md:text-9xl text-[#fbfbf8] tracking-wide leading-none capitalize drop-shadow-2xl select-none -rotate-2 py-1 hover:rotate-0 transition-transform duration-300">
-              Maaz Khan
+              Syed Haziq Ahmed
             </h1>
 
             {/* Software Developer in Clean Thin Font */}
@@ -200,28 +200,39 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right Column: Integrated Portrait */}
+
+        {/* Right Column: Interactive Portrait */}
         <div className="lg:col-span-5 flex justify-center lg:justify-end">
-          <div className="relative w-full max-w-[320px] sm:max-w-sm aspect-[4/5] rounded-3xl p-3 bg-gradient-to-b from-white/[0.12] to-white/[0.02] backdrop-blur-2xl border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.9)] overflow-hidden group hover:border-amber-500/40 transition-colors duration-500">
+          <div className="relative w-full max-w-[320px] sm:max-w-sm aspect-[4/5] rounded-3xl p-3 bg-gradient-to-b from-white/[0.12] to-white/[0.02] backdrop-blur-2xl border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.9)] overflow-hidden group hover:border-amber-500/50 transition-all duration-500">
+
+            {/* Portrait Image */}
             <img
-              src="/images/My pp.jpeg"
-              alt="Portrait of Maaz Khan, Software Engineer"
-              loading="eager"
-              decoding="async"
-              className="w-full h-full object-contain rounded-2xl drop-shadow-[0_20px_30px_rgba(0,0,0,0.9)] group-hover:scale-105 transition duration-700 ease-out"
-              onError={(e) => {
-                e.currentTarget.src = './WhatsApp Image 2026-07-16 at 9.01.25 PM.jpeg';
-              }}
+              src="/images/My%20pp.jpeg.jpg"
+              alt="Portrait of Syed Haziq Ahmed"
+              className="absolute inset-0 w-full h-full object-cover object-center grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-in-out"
             />
 
-            <div className="absolute bottom-4 left-4 right-4 bg-[#0a0b12]/95 backdrop-blur-md text-white py-2.5 px-4 rounded-xl flex justify-between items-center font-mono text-xs border border-white/15 shadow-xl">
-              <span className="font-bold tracking-wider">MAAZ KHAN</span>
+            {/* Dark Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/10 opacity-70 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none"></div>
+
+            {/* Hover Glow */}
+            <div className="absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/10 group-hover:ring-amber-400/40 transition-all duration-500 pointer-events-none"></div>
+
+            {/* Bottom Information Bar */}
+            <div className="absolute bottom-4 left-4 right-4 bg-[#0a0b12]/85 backdrop-blur-md text-white py-3 px-4 rounded-xl flex justify-between items-center font-mono text-xs border border-white/15 shadow-xl transition-all duration-500 group-hover:border-amber-500/40">
+
+              <span className="font-bold tracking-wider">
+                Syed Haziq Ahmed
+              </span>
+
               <span className="text-amber-400 font-bold text-[11px] uppercase tracking-wider">
                 AVAILABLE
               </span>
+
             </div>
           </div>
         </div>
+
       </div>
     </section>
   );

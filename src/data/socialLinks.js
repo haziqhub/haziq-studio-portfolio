@@ -1,36 +1,28 @@
 export const socialLinks = [
   {
     name: 'LINKEDIN',
-    url: 'https://www.linkedin.com/in/maaz-ahmed-423b86326/',
-    display: 'Maaz Ahmed',
+    url: 'https://www.linkedin.com/in/syed-haziq-ahmed-874a67363/',
+    display: '',
     type: 'professional'
   },
   {
-    name: 'GITHUB',
-    url: 'https://github.com/netox44',
-    display: 'github.com/netox44',
-    type: 'code'
-  },
-  {
-    name: 'UPWORK',
-    url: 'https://www.upwork.com/freelancers/~01c866bb54bbc1da77',
-    display: 'Maaz K.',
-    type: 'freelance'
+    name: 'THREADS',
+    url: 'https://www.threads.com/@syed_haziq_ahmed__',
+    display: '',
+    type: 'social'
   },
   {
     name: 'INSTAGRAM',
-    url: 'https://www.instagram.com/mvvz.ahm4d?igsh=MTl4dnA0dnRmYXE5cg==',
-    display: '@mvvz.ahm4d',
+    url: 'https://www.instagram.com/syed_haziq_ahmed__/',
     type: 'social'
   }
 ];
-
 export const contactDetails = {
-  name: 'Maaz Khan',
+  name: 'Syed Haziq Ahmed',
   title: 'Software Engineer & Full Stack Developer',
-  email: 'maazahmed2005b@gmail.com',
-  rawWhatsApp: '03306175872',
-  whatsAppUrl: 'https://wa.me/923306175872?text=Hello%20Maaz,%20I%20reviewed%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project.',
+  email: 'ahmedhaziq084@gmail.com',
+  rawWhatsApp: '+92 310-807-1840',
+  whatsAppUrl: 'https://wa.me/923108071840',
   location: 'Karachi, Pakistan',
   status: 'AVAILABLE FOR ROLES & CONTRACTS'
 };

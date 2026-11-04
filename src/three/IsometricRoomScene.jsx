@@ -3,9 +3,9 @@ import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
 /* ============================================================================
-   ANTIQUE ARCHITECT'S STUDIO
-   Matte materials only: aged oak, walnut, limewash plaster, oxblood leather,
-   dull brass. No emissive glow, no gradients.
+   HAZIQ STUDIO — WARM HERITAGE WORKSPACE
+   A warm, cinematic studio palette: natural oak, honeyed walnut, ivory limewash,
+   muted sage, dusty blue and softly aged brass.
    Units are metres. Floor top = y 0. Gate wall sits at z = +3.6.
    ========================================================================== */
 
@@ -80,13 +80,13 @@ function woodCanvas(base, dark, light, seed) {
 function gateWoodCanvas() {
   const [c, x] = mk(512, 1024);
   const r = rng(31);
-  x.fillStyle = '#3b2b1d';
+  x.fillStyle = '#654a32';
   x.fillRect(0, 0, 512, 1024);
   for (let i = 0; i < 60; i++) {
     const px = r() * 512;
     const ph = r() * 6;
     const amp = 3 + r() * 5;
-    x.strokeStyle = r() > 0.5 ? '#2a1d13' : '#4a3624';
+    x.strokeStyle = r() > 0.5 ? '#493522' : '#806044';
     x.globalAlpha = 0.08 + r() * 0.06;
     x.lineWidth = 3 + r() * 4;
     x.beginPath();
@@ -115,7 +115,7 @@ function plasterCanvas(base, seed) {
 function floorCanvas() {
   const [c, x] = mk(1024, 1024);
   const r = rng(77);
-  const tones = ['#5a3c26', '#4f3420', '#654530', '#47301e', '#583a25'];
+  const tones = ['#927354', '#806348', '#a18462', '#765a40', '#8b6d4e'];
   for (let row = 0; row < 32; row++) {
     const cuts = [0, 1024];
     for (let i = 0, n = 2 + Math.floor(r() * 3); i < n; i++) cuts.push(Math.floor(r() * 30) * 32 + 32);
@@ -124,7 +124,7 @@ function floorCanvas() {
       const px = pts[i], pw = pts[i + 1] - px, py = row * 32;
       x.fillStyle = tones[Math.floor(r() * tones.length)];
       x.fillRect(px, py, pw, 32);
-      x.strokeStyle = '#1d130b';
+      x.strokeStyle = '#493724';
       x.globalAlpha = 0.12;
       x.lineWidth = 1;
       for (let g = 0; g < 4; g++) {
@@ -135,7 +135,7 @@ function floorCanvas() {
         x.stroke();
       }
       x.globalAlpha = 0.55;
-      x.strokeStyle = '#150d07';
+      x.strokeStyle = '#493724';
       x.lineWidth = 2;
       x.strokeRect(px, py, pw, 32);
       x.globalAlpha = 1;
@@ -150,11 +150,11 @@ function rugCanvas() {
     x.fillStyle = col;
     x.fillRect(n, n, 512 - n * 2, 384 - n * 2);
   };
-  inset(0, '#4a211e');
-  inset(14, '#bfae8a');
-  inset(26, '#2b3548');
-  inset(46, '#4a211e');
-  x.strokeStyle = '#a98f66';
+  inset(0, '#596354');
+  inset(14, '#d8c9a8');
+  inset(26, '#788797');
+  inset(46, '#596354');
+  x.strokeStyle = '#c5ad7e';
   x.lineWidth = 2;
   for (let gx = 96; gx <= 416; gx += 40)
     for (let gy = 84; gy <= 300; gy += 36) {
@@ -170,52 +170,121 @@ function rugCanvas() {
     x.closePath();
     x.fill();
   };
-  dia(130, 96, '#2b3548');
-  dia(100, 72, '#bfae8a');
-  dia(70, 50, '#4a211e');
-  dia(34, 24, '#2b3548');
+  dia(130, 96, '#788797');
+  dia(100, 72, '#d8c9a8');
+  dia(70, 50, '#596354');
+  dia(34, 24, '#788797');
   return c;
 }
 
-function printCanvas(rows) {
-  const [c, x] = mk(640, 860);
-  const r = rng(5);
-  x.fillStyle = '#d3c39b';
-  x.fillRect(0, 0, 640, 860);
-  for (let i = 0; i < 1600; i++) {
-    x.fillStyle = '#5a4630';
-    x.globalAlpha = 0.03 + r() * 0.05;
-    x.fillRect(r() * 640, r() * 860, 1 + r() * 3, 1 + r() * 3);
+/* Framed artwork: original abstract graphic compositions, no quotes or typography. */
+function graphicArtCanvas(w, h, style = 0) {
+  const [c, x] = mk(w, h);
+  const palettes = [
+    ['#e7ddc8', '#758477', '#b88c61', '#344b48', '#d2b995'],
+    ['#e9dfcc', '#526b70', '#c18d69', '#a7a58b', '#343c3b'],
+    ['#e8dfcf', '#8c705c', '#d1b68c', '#65786c', '#3f514d'],
+    ['#e5dcc9', '#6c7c88', '#b88d69', '#d0bd9b', '#48564e'],
+    ['#e9dfcc', '#596b59', '#b58a63', '#8d7666', '#d0c3a7'],
+  ];
+  const [paper, a, b, d, ink] = palettes[style % palettes.length];
+  x.fillStyle = paper;
+  x.fillRect(0, 0, w, h);
+
+  // Subtle paper grain and a restrained gallery-style border.
+  const r = rng(900 + style * 37 + w);
+  for (let i = 0; i < Math.floor(w * h / 180); i++) {
+    x.fillStyle = r() > 0.5 ? '#fff' : '#594a39';
+    x.globalAlpha = 0.025 + r() * 0.035;
+    x.fillRect(r() * w, r() * h, 1 + r() * 2, 1 + r() * 2);
   }
   x.globalAlpha = 1;
-  x.strokeStyle = '#4a3825';
-  x.lineWidth = 6;
-  x.strokeRect(34, 34, 572, 792);
-  x.lineWidth = 2;
-  x.strokeRect(50, 50, 540, 760);
-  x.fillStyle = '#35271a';
-  x.textAlign = 'center';
-  rows.forEach(([t, size, y, w]) => {
-    x.font = `${w || 700} ${size}px ${SERIF}`;
-    x.fillText(t, 320, y);
-  });
+  x.strokeStyle = '#8b7658';
+  x.lineWidth = Math.max(2, w * 0.006);
+  x.strokeRect(w * 0.045, h * 0.035, w * 0.91, h * 0.93);
+
+  const circle = (cx, cy, radius, color, alpha = 1) => {
+    x.globalAlpha = alpha;
+    x.fillStyle = color;
+    x.beginPath();
+    x.arc(cx, cy, radius, 0, Math.PI * 2);
+    x.fill();
+    x.globalAlpha = 1;
+  };
+  const polygon = (pts, color, alpha = 1) => {
+    x.globalAlpha = alpha;
+    x.fillStyle = color;
+    x.beginPath();
+    x.moveTo(pts[0][0], pts[0][1]);
+    pts.slice(1).forEach(([px, py]) => x.lineTo(px, py));
+    x.closePath();
+    x.fill();
+    x.globalAlpha = 1;
+  };
+
+  if (style % 5 === 0) {
+    // Organic arch + overlapping sun discs.
+    x.fillStyle = a;
+    x.beginPath();
+    x.arc(w * 0.5, h * 0.68, Math.min(w, h) * 0.34, Math.PI, 0);
+    x.lineTo(w * 0.84, h * 0.88); x.lineTo(w * 0.16, h * 0.88); x.closePath(); x.fill();
+    circle(w * 0.66, h * 0.34, Math.min(w, h) * 0.16, b);
+    circle(w * 0.34, h * 0.48, Math.min(w, h) * 0.12, d, 0.9);
+    polygon([[w*.16,h*.78],[w*.5,h*.55],[w*.84,h*.78],[w*.84,h*.88],[w*.16,h*.88]], ink, .7);
+  } else if (style % 5 === 1) {
+    // Architectural blocks and a fine circular motif.
+    polygon([[w*.12,h*.18],[w*.55,h*.18],[w*.55,h*.82],[w*.12,h*.82]], a);
+    polygon([[w*.55,h*.34],[w*.86,h*.34],[w*.86,h*.82],[w*.55,h*.82]], b);
+    circle(w*.55,h*.34,Math.min(w,h)*.2,d,.92);
+    x.strokeStyle = ink; x.lineWidth = Math.max(2,w*.008);
+    x.beginPath(); x.arc(w*.55,h*.34,Math.min(w,h)*.28,0,Math.PI*2); x.stroke();
+  } else if (style % 5 === 2) {
+    // Layered topographic curves.
+    for (let i = 0; i < 9; i++) {
+      x.beginPath();
+      x.strokeStyle = [a,b,d,ink][i%4];
+      x.globalAlpha = .72;
+      x.lineWidth = Math.max(2,w*.006);
+      x.ellipse(w*.5, h*.55, w*(.18+i*.035), h*(.13+i*.055), -.22, Math.PI*1.05, Math.PI*1.95);
+      x.stroke();
+    }
+    x.globalAlpha = 1;
+    circle(w*.5,h*.48,Math.min(w,h)*.105,b);
+  } else if (style % 5 === 3) {
+    // Bold diagonal geometry with a warm focal circle.
+    polygon([[w*.12,h*.16],[w*.72,h*.16],[w*.42,h*.84],[w*.12,h*.84]], a);
+    polygon([[w*.72,h*.16],[w*.88,h*.36],[w*.58,h*.84],[w*.42,h*.84]], b);
+    circle(w*.62,h*.42,Math.min(w,h)*.16,d);
+    x.strokeStyle = ink; x.lineWidth = Math.max(2,w*.009);
+    x.beginPath(); x.moveTo(w*.16,h*.72); x.lineTo(w*.82,h*.28); x.stroke();
+  } else {
+    // Minimal botanical / sculptural composition.
+    x.strokeStyle = a; x.lineWidth = Math.max(3,w*.018);
+    x.beginPath(); x.moveTo(w*.5,h*.82); x.bezierCurveTo(w*.45,h*.58,w*.56,h*.4,w*.5,h*.16); x.stroke();
+    for (let i=0;i<5;i++) {
+      const yy=h*(.28+i*.11), side=i%2===0?-1:1;
+      x.fillStyle = i%2===0?b:d;
+      x.beginPath(); x.ellipse(w*.5+side*w*.13,yy,w*.13,h*.055,side*.45,0,Math.PI*2); x.fill();
+    }
+    circle(w*.5,h*.18,Math.min(w,h)*.09,ink,.9);
+  }
   return c;
 }
 
 /* Nameplate: dark walnut plate, brass rule, engraved title. */
 function plaqueCanvas(title, sub) {
   const [c, x] = mk(768, 256);
-  x.fillStyle = '#2a2018';
+  x.fillStyle = '#44382b';
   x.fillRect(0, 0, 768, 256);
-  x.strokeStyle = '#7d6a48';
+  x.strokeStyle = '#b39a6b';
   x.lineWidth = 6;
   x.strokeRect(14, 14, 740, 228);
   x.lineWidth = 2;
   x.strokeRect(28, 28, 712, 200);
-  x.fillStyle = '#d6cbb2';
+  x.fillStyle = '#eee5d2';
   x.font = `700 100px ${SERIF}`;
   spaced(x, title, 384, 140, 18);
-  x.fillStyle = '#9a8c72';
+  x.fillStyle = '#c7b895';
   x.font = `600 24px ${MONO}`;
   spaced(x, sub, 384, 200, 10);
   return c;
@@ -224,7 +293,7 @@ function plaqueCanvas(title, sub) {
 /* Framed quote poster: aged paper, double rule, serif quote, small tracked attribution. */
 function quoteCanvas(w, h, lines, by, size) {
   const [c, x] = mk(w, h);
-  x.fillStyle = '#d3c39b';
+  x.fillStyle = '#e5dcc7';
   x.fillRect(0, 0, w, h);
   const r = rng(w + h);
   for (let i = 0; i < 1200; i++) {
@@ -233,12 +302,12 @@ function quoteCanvas(w, h, lines, by, size) {
     x.fillRect(r() * w, r() * h, 1 + r() * 3, 1 + r() * 3);
   }
   x.globalAlpha = 1;
-  x.strokeStyle = '#4a3825';
+  x.strokeStyle = '#79664c';
   x.lineWidth = 6;
   x.strokeRect(w * 0.06, h * 0.06, w * 0.88, h * 0.88);
   x.lineWidth = 2;
   x.strokeRect(w * 0.09, h * 0.09, w * 0.82, h * 0.82);
-  x.fillStyle = '#35271a';
+  x.fillStyle = '#40372c';
   x.textAlign = 'center';
   x.font = `700 ${size}px ${SERIF}`;
   const lh = size * 1.25;
@@ -268,25 +337,24 @@ function mainScreenCanvas() {
   x.fillText('release/production  ·  build succeeded', 1776, 33);
   x.textAlign = 'left';
   const L = [
-    ['namespace Architecture.Enterprise.Core.Services;', '#6c6a64'],
-    ['using Microsoft.EntityFrameworkCore;', '#6c6a64'],
+    ["import { useFrame } from '@react-three/fiber';", '#6c6a64'],
+    ["import * as THREE from 'three';", '#6c6a64'],
     ['', '#fff'],
-    ['public sealed class OrderProcessor : IOrderProcessor', '#c4a574'],
-    ['{', '#c9c3b4'],
-    ['    private readonly ISqlDbContext _context;', '#a39e92'],
-    ['    private readonly ILogger<OrderProcessor> _logger;', '#a39e92'],
+    ['const INTRO_DURATION = 11.0;', '#c4a574'],
+    ['const DOOR_START = 1.2;', '#c4a574'],
+    ['const DOOR_DURATION = 3.8;', '#c4a574'],
     ['', '#fff'],
-    ['    public async Task<ExecutionResult> DispatchAsync(OrderPayload payload)', '#b9a27c'],
-    ['    {', '#c9c3b4'],
-    ['        await using var tx = await _context.Database.BeginTransactionAsync();', '#7f9f8a'],
-    ['        var verified = OrderPolicy.VerifyStructuralIntegrity(payload);', '#a9b8a8'],
-    ['        if (!verified.IsSuccess) return ExecutionResult.Reject(verified.Error);', '#b87a6e'],
-    ['', '#fff'],
-    ['        await _context.Orders.AddAsync(payload.ToEntity());', '#a9b8a8'],
-    ['        await _context.SaveChangesAsync();', '#a9b8a8'],
-    ['        _logger.LogInformation("Order committed: {Id}", payload.Id);', '#a58a6f'],
-    ['        return ExecutionResult.Success();', '#7f9f8a'],
-    ['    }', '#c9c3b4'],
+    ['function StudioWalkthrough({ camera, progress }) {', '#b9a27c'],
+    ['  useFrame((state, delta) => {', '#c9c3b4'],
+    ['    const t = THREE.MathUtils.clamp(progress.current / INTRO_DURATION, 0, 1);', '#7f9f8a'],
+    ['    const eased = t * t * (3.0 - 2.0 * t);', '#a9b8a8'],
+    ['    camera.position.lerpVectors(start, finish, eased);', '#a9b8a8'],
+    ['    camera.lookAt(target);', '#b9a27c'],
+    ['    const doorT = THREE.MathUtils.clamp(', '#c9c3b4'],
+    ['      (progress.current - DOOR_START) / DOOR_DURATION, 0, 1);', '#7f9f8a'],
+    ['    doorOpen.current = doorT * doorT * (3 - 2 * doorT);', '#a9b8a8'],
+    ['  });', '#c9c3b4'],
+    ['  return null;', '#7f9f8a'],
     ['}', '#c9c3b4'],
   ];
   x.font = `500 26px ${MONO}`;
@@ -325,18 +393,18 @@ function vertScreenCanvas() {
 
 /* ---------- materials (created once per mount, disposed on unmount) ---------- */
 function buildMaterials() {
-  const oakV = toTex(woodCanvas('#3b2b1d', '#1c130b', '#5a432d', 11));
+  const oakV = toTex(woodCanvas('#60472f', '#39291d', '#98734d', 11));
   const oakH = oakV.clone();
-  const waV = toTex(woodCanvas('#5a3b24', '#2b1a0f', '#7a5636', 23));
+  const waV = toTex(woodCanvas('#795638', '#493321', '#b18a5d', 23));
   const waH = waV.clone();
   [oakH, waH].forEach((t) => {
     t.center.set(0.5, 0.5);
     t.rotation = Math.PI / 2;
     t.needsUpdate = true;
   });
-  const plasterTex = toTex(plasterCanvas('#a89678', 3), [3, 2]);
-  const ceilTex = toTex(plasterCanvas('#8d7f69', 9), [3, 3]);
-  const stoneTex = toTex(plasterCanvas('#8a8377', 14), [2, 2]);
+  const plasterTex = toTex(plasterCanvas('#d4c7ad', 3), [3, 2]);
+  const ceilTex = toTex(plasterCanvas('#c3b69c', 9), [3, 3]);
+  const stoneTex = toTex(plasterCanvas('#b9b4a7', 14), [2, 2]);
   const floorTex = toTex(floorCanvas(), [4, 4]);
   const rugTex = toTex(rugCanvas());
   const gateTex = toTex(gateWoodCanvas());
@@ -352,14 +420,14 @@ function buildMaterials() {
     stone: std({ map: stoneTex, roughness: 0.9 }),
     floor: std({ map: floorTex, roughness: 0.55 }),
     rug: std({ map: rugTex, roughness: 1 }),
-    brass: std({ color: '#8a6d3b', metalness: 0.45, roughness: 0.5 }),
-    iron: std({ color: '#1d1b19', metalness: 0.5, roughness: 0.55 }),
-    oxblood: std({ color: '#4a201d', roughness: 0.6 }),
-    green: std({ color: '#243428', roughness: 0.75 }),
-    enamel: std({ color: '#1f3a2b', roughness: 0.4, side: THREE.DoubleSide }),
-    paper: std({ color: '#d6c9a8', roughness: 0.9 }),
-    black: std({ color: '#0c0c0d', roughness: 0.4 }),
-    daylight: new THREE.MeshBasicMaterial({ color: '#e9dfc9', toneMapped: false }),
+    brass: std({ color: '#b3945e', metalness: 0.45, roughness: 0.5 }),
+    iron: std({ color: '#39352e', metalness: 0.5, roughness: 0.55 }),
+    oxblood: std({ color: '#76534a', roughness: 0.6 }),
+    green: std({ color: '#596b59', roughness: 0.75 }),
+    enamel: std({ color: '#657a68', roughness: 0.4, side: THREE.DoubleSide }),
+    paper: std({ color: '#e8ddc4', roughness: 0.9 }),
+    black: std({ color: '#242321', roughness: 0.4 }),
+    daylight: new THREE.MeshBasicMaterial({ color: '#f2e8d4', toneMapped: false }),
     books: std({ color: '#ffffff', roughness: 0.8 }),
   };
   return { m, textures: [oakV, oakH, waV, waH, plasterTex, ceilTex, stoneTex, floorTex, rugTex, gateTex] };
@@ -445,7 +513,7 @@ function Door({ side, progress, plaqueTex }) {
         <Cy key={y} p={[0, y, 0.026]} a={[0.02, 0.02, 0.07, 12]} m={M.iron} />
       ))}
 
-      {/* 5. Clean Aged Brass Nameplate (MAAZ on left, STUDIO on right) */}
+      {/* 5. Clean Aged Brass Nameplate (HAZIQ on left, STUDIO on right) */}
       <group position={[X, 1.35, 0.035]}>
         <B p={[0, 0, 0]} s={[0.68, 0.22, 0.01]} m={M.walnutH} />
         <mesh position={[0, 0, 0.006]}>
@@ -495,6 +563,10 @@ function Gate({ doorProgress, tex }) {
       {/* 5. Symmetrical Flush Doors */}
       <Door side={-1} progress={doorProgress} plaqueTex={tex.plaqueL} />
       <Door side={1} progress={doorProgress} plaqueTex={tex.plaqueR} />
+
+      {/* Matching illuminated wall sconces on both sides of the entrance. */}
+      <WallLamp side={-1} />
+      <WallLamp side={1} />
     </group>
   );
 }
@@ -518,6 +590,44 @@ function Wainscot({ len }) {
   );
 }
 
+function CurtainPanel({ side, tint = '#aeb3b8' }) {
+  const geometry = useMemo(() => new THREE.PlaneGeometry(0.46, 2.3, 12, 24), []);
+  const material = useMemo(() => new THREE.MeshStandardMaterial({
+    color: tint,
+    roughness: 0.98,
+    side: THREE.DoubleSide,
+    transparent: true,
+    opacity: 0.97,
+    depthWrite: false,
+  }), [tint]);
+  const base = useMemo(() => Float32Array.from(geometry.attributes.position.array), [geometry]);
+
+  useEffect(() => () => {
+    geometry.dispose();
+    material.dispose();
+  }, [geometry, material]);
+
+  useFrame((state) => {
+    const attr = geometry.attributes.position;
+    const time = state.clock.elapsedTime;
+    for (let i = 0; i < attr.count; i++) {
+      const x = base[i * 3];
+      const y = base[i * 3 + 1];
+      const lower = THREE.MathUtils.clamp((1.15 - y) / 2.3, 0, 1);
+      const fold = Math.sin((x + 0.23) * 22 + side * 0.7);
+      const breeze = Math.sin(time * 1.15 + y * 1.8 + side * 0.8);
+      attr.array[i * 3] = x + fold * 0.014 + breeze * lower * 0.045;
+      attr.array[i * 3 + 1] = y;
+      attr.array[i * 3 + 2] = Math.sin(time * 1.35 + x * 7 + y * 1.7 + side) * lower * 0.035;
+    }
+    attr.needsUpdate = true;
+    geometry.computeVertexNormals();
+    state.invalidate();
+  });
+
+  return <mesh geometry={geometry} material={material} position={[side * 0.43, -0.25, 0.12]} />;
+}
+
 function Window({ z }) {
   const M = useM();
   return (
@@ -530,6 +640,48 @@ function Window({ z }) {
       <B p={[0, 0, 0.04]} s={[0.03, 1.7, 0.04]} m={M.oakV} />
       {[-0.28, 0.28].map((v) => <B key={v} p={[0, v, 0.04]} s={[1.3, 0.03, 0.04]} m={M.oakV} />)}
       <B p={[0, -0.97, 0.1]} s={[1.7, 0.05, 0.2]} m={M.oakH} />
+      {/* Slim brass curtain rail and softly billowing linen panels. */}
+      <Cy p={[0, 0.91, 0.13]} a={[0.018, 0.018, 1.55, 16]} r={[0, 0, Math.PI / 2]} m={M.brass} />
+      <CurtainPanel side={-1} tint="#aeb4ba" />
+      <CurtainPanel side={1} tint="#858e97" />
+      {[-0.43, 0.43].map((v) => (
+        <mesh key={v} position={[v, 0.02, 0.15]} material={M.brass}>
+          <sphereGeometry args={[0.035, 12, 10]} />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+function WallLamp({ side }) {
+  const M = useM();
+  return (
+    <group position={[side * 1.92, 2.18, 0.22]}>
+      {/* Antique-brass wall plate and short projecting arm. */}
+      <mesh rotation={[Math.PI / 2, 0, 0]} material={M.brass} castShadow>
+        <cylinderGeometry args={[0.105, 0.105, 0.035, 24]} />
+      </mesh>
+      <mesh position={[0, 0, 0.075]} rotation={[Math.PI / 2, 0, 0]} material={M.brass}>
+        <cylinderGeometry args={[0.025, 0.025, 0.15, 12]} />
+      </mesh>
+      {/* Warm glowing glass lantern, mounted above eye level beside the doorway. */}
+      <mesh position={[0, 0.015, 0.17]}>
+        <sphereGeometry args={[0.105, 20, 16]} />
+        <meshStandardMaterial
+          color="#f5d9a2"
+          emissive="#ffbd62"
+          emissiveIntensity={2.2}
+          roughness={0.28}
+          metalness={0.05}
+        />
+      </mesh>
+      <mesh position={[0, 0.13, 0.17]} material={M.brass}>
+        <cylinderGeometry args={[0.12, 0.075, 0.055, 20]} />
+      </mesh>
+      <mesh position={[0, -0.105, 0.17]} material={M.brass}>
+        <cylinderGeometry args={[0.075, 0.12, 0.055, 20]} />
+      </mesh>
+      <pointLight position={[0, 0.015, 0.28]} color="#ffc879" intensity={2.1} distance={3.8} decay={2} />
     </group>
   );
 }
@@ -540,7 +692,7 @@ function Bookshelf() {
   const ups = [-2.5, -0.83, 0.83, 2.5];
   const books = useMemo(() => {
     const r = rng(42);
-    const pal = ['#5a2a24', '#2f3d34', '#2b3447', '#6b5636', '#43302a', '#7a6a50', '#3b2e26', '#52422f'];
+    const pal = ['#76534a', '#596b59', '#66788a', '#92734f', '#66564a', '#a18c6b', '#594a3c', '#857052'];
     const out = [];
     for (let l = 0; l < 5; l++) {
       let px = -2.44;
@@ -700,6 +852,7 @@ function Desk({ tex }) {
       ))}
       <Monitor w={1.72} h={0.74} tex={tex.main} position={[0, 1.24, -0.2]} />
       <Monitor w={0.44} h={0.74} tex={tex.vert} position={[-1.12, 1.24, -0.05]} rotation={[0, 0.35, 0]} />
+      <PencilBasket />
       <B p={[0, 0.822, 0.24]} s={[0.5, 0.02, 0.17]} m={M.black} />
       <B p={[0.4, 0.82, 0.24]} s={[0.05, 0.02, 0.08]} m={M.black} />
       <B p={[-0.78, 0.82, 0.25]} s={[0.28, 0.04, 0.2]} m={M.oxblood} />
@@ -718,6 +871,103 @@ function Desk({ tex }) {
           <torusGeometry args={[0.125, 0.007, 6, 36]} />
         </mesh>
       </group>
+    </group>
+  );
+}
+
+function PencilBasket() {
+  const M = useM();
+  const pencils = [
+    [-0.055, 0.28, '#d7a34d'], [-0.018, 0.34, '#c96f58'],
+    [0.025, 0.30, '#718a78'], [0.06, 0.36, '#d9c18d'],
+    [0.09, 0.27, '#7890a5'],
+  ];
+  return (
+    <group position={[0.98, 0.81, 0.24]}>
+      <mesh position={[0, 0.105, 0]} material={M.brass}>
+        <cylinderGeometry args={[0.095, 0.075, 0.21, 24, 1, true]} />
+      </mesh>
+      <mesh position={[0, 0.012, 0]} material={M.brass}>
+        <torusGeometry args={[0.076, 0.008, 8, 24]} />
+      </mesh>
+      {pencils.map(([x, h, color], i) => (
+        <group key={i} position={[x, 0.18 + h / 2, (i % 2) * 0.025 - 0.02]} rotation={[0, 0, (i - 2) * 0.07]}>
+          <mesh material={new THREE.MeshStandardMaterial({ color, roughness: 0.65 })}>
+            <cylinderGeometry args={[0.009, 0.009, h, 8]} />
+          </mesh>
+          <mesh position={[0, h / 2 + 0.008, 0]} material={M.paper}>
+            <coneGeometry args={[0.009, 0.025, 8]} />
+          </mesh>
+        </group>
+      ))}
+    </group>
+  );
+}
+
+function WallGuitar() {
+  const M = useM();
+
+  // A compact double-cutaway electric guitar with a clean red body and white pickguard.
+  const bodyShape = new THREE.Shape();
+  bodyShape.moveTo(-0.02, 0.12);
+  bodyShape.bezierCurveTo(-0.20, 0.25, -0.34, 0.12, -0.32, -0.08);
+  bodyShape.bezierCurveTo(-0.31, -0.20, -0.23, -0.22, -0.20, -0.32);
+  bodyShape.bezierCurveTo(-0.17, -0.45, -0.25, -0.57, -0.15, -0.67);
+  bodyShape.bezierCurveTo(-0.06, -0.77, 0.17, -0.77, 0.25, -0.65);
+  bodyShape.bezierCurveTo(0.32, -0.55, 0.23, -0.43, 0.20, -0.32);
+  bodyShape.bezierCurveTo(0.18, -0.22, 0.30, -0.18, 0.32, -0.06);
+  bodyShape.bezierCurveTo(0.35, 0.12, 0.20, 0.25, 0.04, 0.12);
+  bodyShape.lineTo(0.02, 0.02);
+  bodyShape.lineTo(-0.02, 0.02);
+  bodyShape.closePath();
+
+  const pickguard = new THREE.Shape();
+  pickguard.moveTo(-0.02, 0.04);
+  pickguard.bezierCurveTo(-0.13, 0.12, -0.22, 0.04, -0.18, -0.10);
+  pickguard.bezierCurveTo(-0.14, -0.20, -0.08, -0.19, -0.08, -0.31);
+  pickguard.lineTo(0.12, -0.31);
+  pickguard.bezierCurveTo(0.12, -0.16, 0.20, -0.12, 0.18, -0.02);
+  pickguard.bezierCurveTo(0.16, 0.08, 0.07, 0.12, 0.02, 0.04);
+  pickguard.closePath();
+
+  const redBody = new THREE.MeshStandardMaterial({ color: '#c9363d', roughness: 0.3, metalness: 0.16 });
+  const whitePickguard = new THREE.MeshStandardMaterial({ color: '#f4f1e9', roughness: 0.38, metalness: 0.04 });
+  const guitarBody = new THREE.ExtrudeGeometry(bodyShape, { depth: 0.105, bevelEnabled: true, bevelSegments: 3, steps: 1, bevelSize: 0.025, bevelThickness: 0.025, curveSegments: 12 });
+  const guardGeometry = new THREE.ShapeGeometry(pickguard, 16);
+
+  return (
+    <group position={[1.27, 1.98, -3.535]} rotation={[0, 0, -0.13]} scale={0.76}>
+      {/* Discreet brass wall hanger. */}
+      <B p={[0, 0.69, -0.035]} s={[0.21, 0.045, 0.065]} m={M.brass} cast />
+      <Cy p={[-0.065, 0.61, 0.005]} a={[0.015, 0.015, 0.11, 12]} r={[Math.PI / 2, 0, 0]} m={M.brass} />
+      <Cy p={[0.065, 0.61, 0.005]} a={[0.015, 0.015, 0.11, 12]} r={[Math.PI / 2, 0, 0]} m={M.brass} />
+
+      {/* Sculpted red double-cutaway body. */}
+      <mesh geometry={guitarBody} material={redBody} position={[0, 0, 0.035]} castShadow />
+      <mesh geometry={guardGeometry} material={whitePickguard} position={[0, 0, 0.17]} />
+
+      {/* Maple neck, dark fingerboard and compact headstock. */}
+      <B p={[0, 0.43, 0.105]} s={[0.085, 0.78, 0.065]} m={M.walnutH} cast />
+      <B p={[0, 0.43, 0.142]} s={[0.064, 0.77, 0.012]} m={M.black} />
+      <B p={[0, 0.87, 0.105]} s={[0.15, 0.19, 0.07]} m={M.walnutV} cast />
+
+      {/* Frets and six fine strings. */}
+      {Array.from({ length: 10 }).map((_, i) => (
+        <B key={`fret-${i}`} p={[0, 0.08 + i * 0.071, 0.153]} s={[0.071, 0.008, 0.005]} m={M.brass} />
+      ))}
+      {[-0.024, -0.014, -0.005, 0.005, 0.014, 0.024].map((x) => (
+        <B key={`string-${x}`} p={[x, 0.40, 0.16]} s={[0.002, 0.98, 0.002]} m={M.iron} />
+      ))}
+
+      {/* Two pickups, bridge and tuning pegs make the electric-guitar details legible. */}
+      <B p={[0, -0.20, 0.178]} s={[0.17, 0.045, 0.025]} m={M.black} />
+      <B p={[0, -0.43, 0.178]} s={[0.17, 0.045, 0.025]} m={M.black} />
+      <B p={[0, -0.53, 0.18]} s={[0.20, 0.025, 0.025]} m={M.brass} />
+      {[-1, 1].map((side) => [0.78, 0.88, 0.98].map((y, i) => (
+        <mesh key={`${side}-${i}`} position={[side * 0.085, y, 0.12]} material={M.brass}>
+          <sphereGeometry args={[0.018, 12, 10]} />
+        </mesh>
+      )))}
     </group>
   );
 }
@@ -742,24 +992,28 @@ function Hallway() {
 
 function Lights({ lf }) {
   const hemi = useRef(), key = useRef(), lamp = useRef(), hall = useRef();
+  const fill = useRef(), deskGlow = useRef(), ceilingGlow = useRef();
   const last = useRef(-1);
   useFrame(() => {
     const f = lf.current;
     // Only touch the lights when the factor actually changed (intro fade), not every frame.
     if (Math.abs(f - last.current) < 1e-4) return;
     last.current = f;
-    hemi.current.intensity = 0.7 * f;
-    key.current.intensity = 2.4 * f;
-    lamp.current.intensity = 0.7 * f;
-    hall.current.intensity = 7 * f;
+    hemi.current.intensity = 1.08 * f;
+    key.current.intensity = 2.15 * f;
+    lamp.current.intensity = 1.05 * f;
+    hall.current.intensity = 5.5 * f;
+    fill.current.intensity = 1.15 * f;
+    deskGlow.current.intensity = 1.35 * f;
+    ceilingGlow.current.intensity = 1.0 * f;
   });
   return (
     <>
-      <hemisphereLight ref={hemi} args={['#d8c9ae', '#3a2c20', 1]} />
+      <hemisphereLight ref={hemi} args={['#f0dfc2', '#655747', 1]} />
       <directionalLight
         ref={key}
         position={[7, 5, -1]}
-        color="#ffe6c0"
+        color="#ffe8cf"
         shadow-mapSize={[2048, 2048]}
         shadow-camera-left={-5.5}
         shadow-camera-right={5.5}
@@ -770,8 +1024,11 @@ function Lights({ lf }) {
         shadow-bias={-0.0004}
         shadow-normalBias={0.03}
       />
-      <pointLight ref={lamp} position={[1.1, 1.3, -3.15]} color="#ffcf94" distance={5} decay={2} />
-      <pointLight ref={hall} position={[0, 3.0, 6.4]} color="#ffd8a6" distance={9} decay={2} />
+      <pointLight ref={lamp} position={[1.1, 1.3, -3.15]} color="#f4c58d" distance={5} decay={2} />
+      <pointLight ref={hall} position={[0, 3.0, 6.4]} color="#f7dfbf" distance={9} decay={2} />
+      <pointLight ref={fill} position={[-2.5, 2.7, -1.2]} color="#ffe6c6" distance={7} decay={2} />
+      <pointLight ref={deskGlow} position={[0, 2.15, -2.65]} color="#f6d9a8" distance={4.5} decay={2} />
+      <pointLight ref={ceilingGlow} position={[1.8, 3.15, 1.0]} color="#e1e8ff" distance={6} decay={2} />
     </>
   );
 }
@@ -814,15 +1071,17 @@ export default function IsometricRoomScene({ scrollProgress, doorOpenProgress, i
   const tex = useMemo(() => {
     if (!fontsOk) return null;
     return {
-      plaqueL: toTex(plaqueCanvas('MAAZ', 'ENGINEERING')),
-      plaqueR: toTex(plaqueCanvas('STUDIO', 'WORKSPACE')),
+      plaqueL: toTex(plaqueCanvas('HAZIQ', 'CREATIVE STUDIO')),
+      plaqueR: toTex(plaqueCanvas('STUDIO', 'DESIGN & DEVELOPMENT')),
       main: toTex(mainScreenCanvas()),
       vert: toTex(vertScreenCanvas()),
-      print1: toTex(printCanvas([['DISCIPLINE', 64, 260], ['GREATER THAN', 46, 330], ['MOTIVATION', 64, 400], ['Great software is never accidental.', 25, 560, 600], ['ENGINEERED WITH INTENT', 22, 620, 600]])),
-      print2: toTex(printCanvas([['FIRMITAS', 64, 260], ['UTILITAS', 64, 340], ['VENUSTAS', 64, 420], ['Strength, utility and beauty.', 26, 560, 600], ['Vitruvius', 22, 620, 600]])),
-      quoteBack: toTex(quoteCanvas(1200, 800, ['Form ever follows', 'function.'], 'LOUIS SULLIVAN', 84)),
-      quoteRight: toTex(quoteCanvas(560, 760, ['A house is a machine', 'for living in.'], 'LE CORBUSIER', 36)),
-      quoteLeft: toTex(quoteCanvas(560, 760, ['Less', 'is more.'], 'MIES VAN DER ROHE', 96)),
+      print1: toTex(graphicArtCanvas(640, 860, 0)),
+      print2: toTex(graphicArtCanvas(640, 860, 1)),
+      quoteBack: toTex(graphicArtCanvas(1200, 800, 2)),
+      quoteRight: toTex(graphicArtCanvas(560, 760, 3)),
+      quoteLeft: toTex(graphicArtCanvas(560, 760, 4)),
+      // Place the supplied Bill Gates portrait at public/images/bill-gates-portrait.jpg.
+      billGates: new THREE.TextureLoader().load('/images/bill-gates-portrait.jpg'),
     };
   }, [fontsOk]);
   useEffect(() => () => { if (tex) Object.values(tex).forEach((t) => t.dispose()); }, [tex]);
@@ -864,7 +1123,6 @@ export default function IsometricRoomScene({ scrollProgress, doorOpenProgress, i
       <group ref={roomGroup}>
         <Hallway />
         <Gate doorProgress={doorOpenProgress} tex={tex} />
-
         {/* shell */}
         <mesh rotation={[-Math.PI / 2, 0, 0]} material={mats.m.floor} receiveShadow>
           <planeGeometry args={[7.2, 7.2]} />
@@ -885,7 +1143,8 @@ export default function IsometricRoomScene({ scrollProgress, doorOpenProgress, i
         <Bookshelf />
         <Print pos={[-2.4, 2.2, -3.56]} tex={tex.print1} />
         <Print pos={[2.4, 2.2, -3.56]} tex={tex.print2} />
-        <Poster w={1.2} h={0.8} tex={tex.quoteBack} position={[0, 2.35, -3.582]} />
+        <Poster w={0.82} h={1.12} tex={tex.billGates} position={[0, 2.28, -3.582]} />
+        <WallGuitar />
         <Poster w={0.56} h={0.76} tex={tex.quoteRight} position={[3.582, 1.9, 2.8]} rotation={[0, -Math.PI / 2, 0]} />
         <Poster w={0.56} h={0.76} tex={tex.quoteLeft} position={[-3.582, 1.9, 2.8]} rotation={[0, Math.PI / 2, 0]} />
         <Desk tex={tex} />

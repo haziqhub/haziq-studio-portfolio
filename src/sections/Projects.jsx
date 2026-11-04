@@ -26,7 +26,7 @@ export default function Projects() {
   const laptopHarbor = sortedProjects.find((p) => p.id === 'laptop-harbor') || sortedProjects[0] || null;
   const insuranceSystem = sortedProjects.find((p) => p.id === 'insurance-system') || sortedProjects[1] || null;
   const bmwConcept = sortedProjects.find((p) => p.id === 'bmw-concept') || sortedProjects[2] || null;
-  
+
   const featuredIds = ['laptop-harbor', 'insurance-system', 'bmw-concept'];
   const secondaryProjects = sortedProjects.filter((p) => !featuredIds.includes(p.id));
 
@@ -128,13 +128,13 @@ export default function Projects() {
                   EXPAND FULLSCREEN ↗
                 </span>
                 <img
-                  src={laptopHarbor.primaryImage || '/images/LH/1.png'}
+                  src={laptopHarbor.primaryImage || '../dist/images/LH/1.png'}
                   alt="Laptop Harbor Main Screen"
                   decoding="async"
                   className="w-full h-full object-contain rounded-xl group-hover:scale-105 transition duration-500"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
-                    e.currentTarget.src = '/images/LH/1.png';
+                    e.currentTarget.src = '../dist/images/LH/1.png';
                   }}
                 />
               </div>
@@ -153,7 +153,7 @@ export default function Projects() {
                       className="w-full h-full object-contain rounded-xl group-hover:scale-105 transition duration-500"
                       onError={(e) => {
                         e.currentTarget.onerror = null;
-                        e.currentTarget.src = `/images/LH/${i + 2}.png`;
+                        e.currentTarget.src = `../dist/images/LH/${i + 2}.png`;
                       }}
                     />
                   </div>
@@ -213,13 +213,13 @@ export default function Projects() {
                 className="md:col-span-2 aspect-video bg-black/50 border border-white/15 rounded-2xl p-2.5 shadow-md overflow-hidden relative group cursor-pointer hover:border-amber-500/50 transition-colors flex items-center justify-center"
               >
                 <img
-                  src={insuranceSystem.primaryImage || '/images/Insurance/1.png'}
+                  src={insuranceSystem.primaryImage || '../dist/images/Insurance/1.png'}
                   alt="Insurance System Main Screen"
                   decoding="async"
                   className="w-full h-full object-contain rounded-xl group-hover:scale-105 transition duration-500"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
-                    e.currentTarget.src = '/images/Insurance/1.png';
+                    e.currentTarget.src = '../dist/images/Insurance/1.png';
                   }}
                 />
               </div>
@@ -238,7 +238,7 @@ export default function Projects() {
                       className="w-full h-full object-contain rounded-xl group-hover:scale-105 transition duration-500"
                       onError={(e) => {
                         e.currentTarget.onerror = null;
-                        e.currentTarget.src = `/images/Insurance/${i + 2}.png`;
+                        e.currentTarget.src = `../dist/images/Insurance/${i + 2}.png`;
                       }}
                     />
                   </div>
@@ -298,7 +298,7 @@ export default function Projects() {
 
               <video
                 ref={bmwVideoRef}
-                src={bmwConcept.videoUrl || '/videos/BM.mp4'}
+                src={bmwConcept.videoUrl || '../dist/videos/BM.mp4'}
                 className="w-full h-full object-cover rounded-xl"
                 autoPlay
                 loop
@@ -313,7 +313,7 @@ export default function Projects() {
         {/* ================= 4, 5, 6, 7. SECONDARY PROJECTS (2-COLUMN GRID) ================= */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           {secondaryProjects.map((proj) => {
-            const fallbackImg = proj.primaryImage || '/images/GS/1.png';
+            const fallbackImg = proj.primaryImage || '../dist/images/GS/1.png';
 
             return (
               <article

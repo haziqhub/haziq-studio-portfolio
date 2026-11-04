@@ -12,16 +12,16 @@ export default function Navbar() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      // Agar bilkul top par hain to hamesha show karein
+    
       if (currentScrollY < 40) {
         setIsVisible(true);
       } 
-      // Neeche scroll karne par chup jaye
+     
       else if (currentScrollY > lastScrollY && currentScrollY > 80) {
         setIsVisible(false);
-        setMobileMenuOpen(false); // Mobile menu open ho to close ho jaye
+        setMobileMenuOpen(false);
       } 
-      // Upar scroll karne par wapis aa jaye
+     
       else if (currentScrollY < lastScrollY) {
         setIsVisible(true);
       }
@@ -89,7 +89,7 @@ export default function Navbar() {
                     : 'opacity-100 scale-100 translate-y-0'
                 }`}
               >
-                MK
+                SHA
               </span>
 
               {/* Maaz Khan (Signature font, floats down & fades in slowly on hover) */}
@@ -100,7 +100,7 @@ export default function Navbar() {
                     : 'opacity-0 scale-75 translate-y-3 pointer-events-none'
                 }`}
               >
-                Maaz Khan
+                Syed Haziq Ahmed
               </span>
             </div>
 
