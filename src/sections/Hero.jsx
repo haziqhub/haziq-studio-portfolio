@@ -207,7 +207,7 @@ export default function Hero() {
 
             {/* Portrait Image */}
             <img
-              src="\images\my-photo.png"
+              src="\images\My pp.jpeg.jpg"
               alt="Portrait of Syed Haziq Ahmed"
               className="absolute inset-0 w-full h-full object-cover object-center grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-in-out"
             />
