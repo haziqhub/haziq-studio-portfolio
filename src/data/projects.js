@@ -10,18 +10,18 @@ export const projectsData = [
     technologies: ['Flutter', 'Dart', 'Firebase Auth', 'Cloud Firestore', 'Provider', 'Cloudinary API'],
     primaryImage: '/images/LH/1.png',
     secondaryImages: [
-      '../dist/images/LH/2.png',
-      '../dist/images/LH/3.png'
+      '/images/LH/2.png',
+      '/images/LH/3.png'
     ],
     galleryImages: [
-      { src: '../dist/images/LH/1.png', title: 'Main Storefront Interface' },
-      { src: '../dist/images/LH/2.png', title: 'Product Specification & Details' },
-      { src: '../dist/images/LH/3.png', title: 'Cart Management & Checkout' },
-      { src: '../dist/images/LH/4.png', title: 'Category Filters & Search' },
-      { src: '../dist/images/LH/5.png', title: 'User Profile & Authentication' },
-      { src: '../dist/images/LH/6.png', title: 'Order History & Status' },
-      { src: '../dist/images/LH/7.png', title: 'Admin Control Panel' },
-      { src: '../dist/images/LH/8.png', title: 'Inventory Management Table' }
+      { src: 'images/LH/1.png', title: 'Main Storefront Interface' },
+      { src: '/images/LH/2.png', title: 'Product Specification & Details' },
+      { src: '/images/LH/3.png', title: 'Cart Management & Checkout' },
+      { src: '/images/LH/4.png', title: 'Category Filters & Search' },
+      { src: '/images/LH/5.png', title: 'User Profile & Authentication' },
+      { src: '/images/LH/6.png', title: 'Order History & Status' },
+      { src: '/images/LH/7.png', title: 'Admin Control Panel' },
+      { src: '/images/LH/8.png', title: 'Inventory Management Table' }
     ],
     videoUrl: null,
     liveUrl: null,
@@ -40,17 +40,17 @@ export const projectsData = [
     technologies: ['ASP.NET Core MVC', 'C#', 'SQL Server', 'Entity Framework Core', 'Bootstrap'],
     primaryImage: '/images/Insurance/1.png',
     secondaryImages: [
-      '../dist/images/Insurance/2.png',
-      '../dist/images/Insurance/3.png'
+      '/images/Insurance/2.png',
+      '/images/Insurance/3.png'
     ],
     galleryImages: [
-      { src: '../dist/images/Insurance/1.png', title: 'Enterprise Portal Overview' },
-      { src: '../dist/images/Insurance/2.png', title: 'Policy Exploration & Quotation' },
-      { src: '../dist/images/Insurance/3.png', title: 'Underwriting Verification Portal' },
-      { src: '../dist/images/Insurance/4.png', title: 'Policy Records & Audit Trail' },
-      { src: '../dist/images/Insurance/5.png', title: 'Claims Management Dashboard' },
-      { src: '../dist/images/Insurance/6.png', title: 'User Security & Role Access' },
-      { src: '../dist/images/Insurance/7.png', title: 'System Analytics & Reports' }
+      { src: '/images/Insurance/1.png', title: 'Enterprise Portal Overview' },
+      { src: '/images/Insurance/2.png', title: 'Policy Exploration & Quotation' },
+      { src: '/images/Insurance/3.png', title: 'Underwriting Verification Portal' },
+      { src: '/images/Insurance/4.png', title: 'Policy Records & Audit Trail' },
+      { src: '/images/Insurance/5.png', title: 'Claims Management Dashboard' },
+      { src: '/images/Insurance/6.png', title: 'User Security & Role Access' },
+      { src: '/images/Insurance/7.png', title: 'System Analytics & Reports' }
     ],
     videoUrl: null,
     liveUrl: null,
@@ -70,7 +70,7 @@ export const projectsData = [
     primaryImage: null,
     secondaryImages: [],
     galleryImages: [],
-    videoUrl: '../dist/videos/BM.mp4',
+    videoUrl: '/videos/BM.mp4',
     liveUrl: 'https://maazbmwproj.netlify.app/',
     githubUrl: 'https://github.com/netox44',
     featured: true
@@ -85,17 +85,17 @@ export const projectsData = [
     tagline: 'Modern cosmetics digital experience featuring elegant product layouts and stylish collections.',
     description: 'A modern cosmetics website featuring elegant product layouts, stylish collections, and a premium shopping experience.',
     technologies: ['Modern CSS', 'Tailwind CSS', 'Responsive Design', 'UI/UX Design', 'JavaScript ES6'],
-    primaryImage: '../dist/images/Glow nd Grace/1.png',
+    primaryImage: '/images/Glow nd Grace/1.png',
     secondaryImages: [],
     galleryImages: [
-      { src: '../dist/images/Glow nd Grace/1.png', title: 'Cosmetics Landing Hero' },
-      { src: '../dist/images/Glow nd Grace/2.png', title: 'Product Showcase Catalog' },
-      { src: '../dist/images/Glow nd Grace/3.png', title: 'Shade & Skin Tone Matcher' },
-      { src: '../dist/images/Glow nd Grace/4.png', title: 'Skincare Routine Builder' },
-      { src: '../dist/images/Glow nd Grace/5.png', title: 'Luxury Collection Grid' },
-      { src: '../dist/images/Glow nd Grace/6.png', title: 'Ingredients Transparency View' },
-      { src: '../dist/images/Glow nd Grace/7.png', title: 'Bag & Checkout Flow' },
-      { src: '../dist/images/Glow nd Grace/8.png', title: 'Mobile Responsive View' }
+      { src: '/images/Glow nd Grace/1.png', title: 'Cosmetics Landing Hero' },
+      { src: '/images/Glow nd Grace/2.png', title: 'Product Showcase Catalog' },
+      { src: '/images/Glow nd Grace/3.png', title: 'Shade & Skin Tone Matcher' },
+      { src: '/images/Glow nd Grace/4.png', title: 'Skincare Routine Builder' },
+      { src: '/images/Glow nd Grace/5.png', title: 'Luxury Collection Grid' },
+      { src: '/images/Glow nd Grace/6.png', title: 'Ingredients Transparency View' },
+      { src: '/images/Glow nd Grace/7.png', title: 'Bag & Checkout Flow' },
+      { src: '/images/Glow nd Grace/8.png', title: 'Mobile Responsive View' }
     ],
     videoUrl: null,
     liveUrl: 'https://gracendglowbymz.netlify.app/',
@@ -112,17 +112,17 @@ export const projectsData = [
     tagline: 'Calming visuals and elegant class booking layouts for yoga and wellness.',
     description: 'A modern yoga and wellness website with calming visuals, elegant class layouts, and an inspiring wellness experience.',
     technologies: ['Modern CSS', 'Responsive Design', 'Tailwind CSS', 'JavaScript'],
-    primaryImage: '../dist/images/Zenflow/1.png',
+    primaryImage: '/images/Zenflow/1.png',
     secondaryImages: [],
     galleryImages: [
-      { src: '../dist/images/Zenflow/1.png', title: 'Studio Overview Landing' },
-      { src: '../dist/images/Zenflow/2.png', title: 'Yoga & Meditation Classes' },
-      { src: '../dist/images/Zenflow/3.png', title: 'Instructor Profiles & Schedules' },
-      { src: '../dist/images/Zenflow/4.png', title: 'Membership & Pricing Plans' },
-      { src: '../dist/images/Zenflow/5.png', title: 'Class Booking Flow' },
-      { src: '../dist/images/Zenflow/6.png', title: 'Mindfulness Audio Player' },
-      { src: '../dist/images/Zenflow/7.png', title: 'Wellness Retreats Showcase' },
-      { src: '../dist/images/Zenflow/8.png', title: 'Mobile Experience Preview' }
+      { src: '/images/Zenflow/1.png', title: 'Studio Overview Landing' },
+      { src: '/images/Zenflow/2.png', title: 'Yoga & Meditation Classes' },
+      { src: '/images/Zenflow/3.png', title: 'Instructor Profiles & Schedules' },
+      { src: '/images/Zenflow/4.png', title: 'Membership & Pricing Plans' },
+      { src: '/images/Zenflow/5.png', title: 'Class Booking Flow' },
+      { src: '/images/Zenflow/6.png', title: 'Mindfulness Audio Player' },
+      { src: '/images/Zenflow/7.png', title: 'Wellness Retreats Showcase' },
+      { src: '/images/Zenflow/8.png', title: 'Mobile Experience Preview' }
     ],
     videoUrl: null,
     liveUrl: 'https://zenflowbymz.netlify.app/',
@@ -139,13 +139,13 @@ export const projectsData = [
     tagline: 'Interactive boutique catalog layout featuring custom CSS modular grids and responsive product cards.',
     description: 'A responsive front end gift shop website built with interactive catalog layouts and modern CSS styling.',
     technologies: ['HTML5', 'CSS3', 'JavaScript ES6', 'Responsive Web Design'],
-    primaryImage: '../dist/images/GS/1.png',
+    primaryImage: '/images/GS/1.png',
     secondaryImages: [],
     galleryImages: [
-      { src: '../dist/images/GS/1.png', title: 'Boutique Storefront Overview' },
-      { src: '../dist/images/GS/2.png', title: 'Interactive Product Grid' },
-      { src: '../dist/images/GS/3.png', title: 'Collection Lookbook Presentation' },
-      { src: '../dist/images/GS/4.png', title: 'Cart Summary & Checkout UI' }
+      { src: '/images/GS/1.png', title: 'Boutique Storefront Overview' },
+      { src: '/images/GS/2.png', title: 'Interactive Product Grid' },
+      { src: '/images/GS/3.png', title: 'Collection Lookbook Presentation' },
+      { src: '/images/GS/4.png', title: 'Cart Summary & Checkout UI' }
     ],
     videoUrl: null,
     liveUrl: 'https://mzgiftshop.netlify.app',
@@ -162,13 +162,13 @@ export const projectsData = [
     tagline: 'Precision athletic streetwear digital showroom focused on motion dynamics and device usability.',
     description: 'A modern UI design platform focused on smooth layouts, animations, and high usability across devices.',
     technologies: ['JavaScript', 'Tailwind CSS', 'CSS3', 'HTML5', 'UI/UX Architecture'],
-    primaryImage: '../dist/images/abibas/Screenshot 2026-07-23 215408.png',
+    primaryImage: '/images/abibas/Screenshot 2026-07-23 215408.png',
     secondaryImages: [],
     galleryImages: [
-      { src: '../dist/images/abibas/Screenshot 2026-07-23 215408.png', title: 'Footwear Experience Landing' },
-      { src: '../dist/images/abibas/Screenshot 2026-07-23 215514.png', title: 'Product Interaction & Angles' },
-      { src: '../dist/images/abibas/Screenshot 2026-07-23 215545.png', title: 'Collection Overview Layout' },
-      { src: '../dist/images/abibas/Screenshot 2026-07-23 215643.png', title: 'Purchase Checkout Flow' }
+      { src: '/images/abibas/Screenshot 2026-07-23 215408.png', title: 'Footwear Experience Landing' },
+      { src: '/images/abibas/Screenshot 2026-07-23 215514.png', title: 'Product Interaction & Angles' },
+      { src: '/images/abibas/Screenshot 2026-07-23 215545.png', title: 'Collection Overview Layout' },
+      { src: '/images/abibas/Screenshot 2026-07-23 215643.png', title: 'Purchase Checkout Flow' }
     ],
     videoUrl: null,
     liveUrl: 'https://abibasbymaaz.netlify.app/',

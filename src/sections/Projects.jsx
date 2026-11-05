@@ -17,8 +17,9 @@ export default function Projects() {
       document.body.style.overflow = '';
     };
   }, [selectedProject, lightboxState.isOpen]);
-
-  const rawProjects = projectSource.projectsData || projectSource.default || projectSource.projects || [];
+  const rawProjects = Array.isArray(projectSource.projectsData)
+    ? projectSource.projectsData
+    : [];
   const sortedProjects = Array.isArray(rawProjects)
     ? [...rawProjects].sort((a, b) => (a.order || 0) - (b.order || 0))
     : [];

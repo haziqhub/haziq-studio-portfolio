@@ -72,7 +72,7 @@ export default function Lightbox({ isOpen, images = [], currentIndex = 0, onClos
         position: 'fixed',
         inset: 0,
         zIndex: 999999,
-        backgroundColor: 'rgba(5, 6, 8, 0.98)',
+        backgroundColor: 'rgba(33, 34, 36, 0.98)',
         backdropFilter: 'blur(20px)',
       }}
       className="flex flex-col justify-between p-4 sm:p-6 md:p-8 select-none overflow-hidden animate-modalIn"
@@ -159,9 +159,8 @@ export default function Lightbox({ isOpen, images = [], currentIndex = 0, onClos
               key={idx}
               type="button"
               onClick={() => onNavigate(idx)}
-              className={`relative w-12 h-9 sm:w-16 sm:h-11 rounded-lg overflow-hidden border transition-all duration-200 shrink-0 cursor-pointer ${
-                idx === currentIndex ? 'border-amber-500 scale-105 shadow-md' : 'border-white/20 opacity-40 hover:opacity-100'
-              }`}
+              className={`relative w-12 h-9 sm:w-16 sm:h-11 rounded-lg overflow-hidden border transition-all duration-200 shrink-0 cursor-pointer ${idx === currentIndex ? 'border-amber-500 scale-105 shadow-md' : 'border-white/20 opacity-40 hover:opacity-100'
+                }`}
             >
               <img src={encodeURI(img.src)} alt="" className="w-full h-full object-cover" />
             </button>
